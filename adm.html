@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel ADM - Aprovar Usuários</title>
+<style>
+  body { font-family: 'Poppins', sans-serif; background: #0d1b2a; color: #fff; margin:0; padding:20px; }
+  h1 { text-align: center; margin-bottom: 30px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 12px; border: 1px solid #444; text-align: left; }
+  th { background: #1e90ff; }
+  button { padding: 6px 12px; margin-right: 5px; border: none; border-radius: 5px; cursor: pointer; color: #fff; }
+  .aprovar { background: #28a745; }
+  .rejeitar { background: #dc3545; }
+</style>
+</head>
+<body>
+
+<h1>Painel de Administração</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody id="usuarios-tabela">
+    <!-- Usuários serão carregados aqui -->
+  </tbody>
+</table>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
+  // 🔒 Verifica login ADM
+  if(sessionStorage.getItem("admLogado") !== "true") {
+    alert("Acesso negado. Faça login como ADM.");
+    window.location.href = "adm-login.html";
+  }
+
+  // Configuração Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyDVLhKPX1LyhGMp0NKb3dRhqWkYKzrzg20",
+    authDomain: "rene-b2c20.firebaseapp.com",
+    projectId: "rene-b2c20",
+    storageBucket: "rene-b2c20.firebasestorage.app",
+    messagingSenderId: "765841188716",
+    appId: "1:765841188716:web:5c3c20fc1509bfb759f549"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const tabela = document.getElementById("usuarios-tabela");
+
+  async function carregarUsuarios() {
+    tabela.innerHTML = "";
+    const querySnapshot = await getDocs(collection(db, "usuarios"));
+    querySnapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${data.nome}</td>
+        <td>${data.email}</td>
+        <td>${data.aprovado ? "Aprovado" : "Pendente"}</td>
+        <td>
+          ${!data.aprovado ? `<button class="aprovar" onclick="aprovar('${docSnap.id}')">Aprovar</button>` : ""}
+          ${!data.aprovado ? `<button class="rejeitar" onclick="rejeitar('${docSnap.id}')">Rejeitar</button>` : ""}
+        </td>
+      `;
+      tabela.appendChild(tr);
+    });
+  }
+
+  window.aprovar = async function(id) {
+    await updateDoc(doc(db, "usuarios", id), { aprovado: true });
+    alert("Usuário aprovado!");
+    carregarUsuarios();
+  }
+
+  window.rejeitar = async function(id) {
+    await updateDoc(doc(db, "usuarios", id), { aprovado: false });
+    alert("Usuário rejeitado!");
+    carregarUsuarios();
+  }
+
+  carregarUsuarios();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #001f3f;
+  color: #fff;
+}
+
+/* 🔹 Barra superior */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #003366;
+  color: #fff;
+}
+
+.top-bar h1 {
+  margin: 0;
+  font-size: clamp(18px, 2vw, 28px);
+}
+
+/* 💎 Banner estilo Angocine atualizado */
+.banner {
+  position: relative;
+  color: #fff;
+  overflow: hidden;
+  height: 220px;
+  width: 100%;
+}
+
+.banner a {
+  display: block;
+  height: 100%;
+  color: inherit;          /* 🔹 Mantém o texto branco mesmo sendo link */
+  text-decoration: none;   /* 🔹 Remove o sublinhado azul */
+}
+
+.banner a:hover {
+  color: #1e90ff;          /* 🔹 Opcional: muda para azul claro no hover */
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover; /* cobre toda a largura sem distorcer */
+  filter: brightness(0.65);
+  transition: transform 0.4s ease, filter 0.3s ease;
+}
+
+.banner:hover img {
+  transform: scale(1.05);
+  filter: brightness(0.8);
+}
+
+.banner-info {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+}
+
+.banner-info h2 {
+  margin: 0;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #fff;
+}
+
+.banner-info p {
+  margin: 5px 0 0;
+  font-size: 0.9em;
+  color: #f0f0f0;
+}
+
+.banner-stars {
+  color: gold;
+  margin-right: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .banner {
+    height: 160px;
+  }
+
+  .banner-info h2 {
+    font-size: 1.3em;
+  }
+}
+
+/* 🔹 Seções de conteúdo */
+.section {
+  margin: 20px 0;
+  padding: 0 15px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.section-header h3 {
+  font-size: 18px;
+  color: #fff;
+  margin: 0;
+}
+
+.section-header .ver-mais {
+  font-size: 14px;
+  color: orange;
+  cursor: pointer;
+}
+
+/* 🔹 Cards */
+.series-container {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.series-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.series-container::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 3px;
+}
+
+.card {
+  background: #00264d;
+  border-radius: 10px;
+  flex: 0 0 140px;
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 2px solid #003366;
+}
+
+.card-link {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.card-link:hover {
+  color: #1e90ff;
+}
+
+/* 🔹 Navegação inferior */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  background: #003366;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: clamp(10px, 2vw, 13px);
+}
+
+.bottom-nav a i {
+  font-size: clamp(16px, 4vw, 18px);
+  margin-bottom: 4px;
+}
+
+/* 🔹 Botões */
+.btn {
+  display: inline-block;
+  padding: 8px 12px;
+  background: #1e90ff;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+.btn:hover {
+  background: #ff8c00;
+}
+

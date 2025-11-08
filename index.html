@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tela de Login</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0d1b2a, #1b263b);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      position: relative;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      width: 320px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #e0e0e0;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+    input::placeholder { color: #bbb; }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1e90ff;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover { background-color: #3a9df8; }
+    p { text-align: center; margin-top: 15px; font-size: 14px; }
+    a { color: #1e90ff; text-decoration: none; font-weight: 500; cursor: pointer; }
+    .hidden { display: none; }
+    .mensagem { text-align: center; margin-top: 15px; color: #90ee90; font-size: 14px; }
+    .voltar { position: absolute; top: 20px; left: 20px; color: #fff; text-decoration: none; font-size: 18px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="loginForm">
+    <h2>Login</h2>
+    <input type="email" id="loginEmail" placeholder="E-mail" />
+    <input type="password" id="loginSenha" placeholder="Palavra-passe" />
+    <button onclick="login()">Entrar</button>
+    <!-- Linha removida: criar conta -->
+  </div>
+
+  <!-- Registro removido completamente -->
+  
+  <!-- Firebase + Firestore + Sessão -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDVLhKPX1LyhGMp0NKb3dRhqWkYKzrzg20",
+      authDomain: "rene-b2c20.firebaseapp.com",
+      projectId: "rene-b2c20",
+      storageBucket: "rene-b2c20.firebasestorage.app",
+      messagingSenderId: "765841188716",
+      appId: "1:765841188716:web:5c3c20fc1509bfb759f549"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Login + Sessão de 2 horas
+    window.login = function() {
+      const email = document.getElementById('loginEmail').value;
+      const senha = document.getElementById('loginSenha').value;
+
+      signInWithEmailAndPassword(auth, email, senha)
+        .then(userCredential => {
+          const user = userCredential.user;
+          const tempoExpiracao = Date.now() + (2 * 60 * 60 * 1000); // 2 horas
+          sessionStorage.setItem("usuarioLogado", JSON.stringify({
+            email: user.email,
+            expiraEm: tempoExpiracao
+          }));
+
+          alert("Login realizado com sucesso!");
+          window.location.href = "home.html";
+        })
+        .catch(error => {
+          alert("Erro: " + error.message);
+        });
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANGOCINE - Streaming</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="catalogo.js" defer></script>
+
+<script>
+  // ✅ Verificar sessão no carregamento da página
+  const usuario = JSON.parse(sessionStorage.getItem("usuarioLogado"));
+  if (!usuario || Date.now() > usuario.expiraEm) {
+    // Sessão inexistente ou expirada → redireciona para login
+    sessionStorage.removeItem("usuarioLogado");
+    window.location.href = "index.html";
+  }
+</script>
+
+</head>
+<body>
+
+<!-- Topo -->
+<header class="top-bar">
+  <i class="fas fa-bars menu-btn"></i>
+  <h1>RENÉ - FILMES & SÉRIES</h1>
+  <i class="fas fa-search" id="search-icon"></i>
+  <form id="search-form" action="resultado.html" method="get" style="display:none;">
+    <input type="text" name="busca" id="search-input" placeholder="Pesquisar...">
+  </form>
+</header>
+
+<!-- Banner -->
+<section class="banner" id="banner-container"></section>
+
+<!-- Conteúdo dinâmico -->
+<main id="conteudo-principal"></main>
+
+<!-- Menu inferior -->
+<nav class="bottom-nav">
+  <a href="#" data-tipo="inicio" class="ativo"><i class="fas fa-home"></i><span>INÍCIO</span></a>
+  <a href="#" data-tipo="filmes"><i class="fas fa-film"></i><span>FILMES</span></a>
+  <a href="#" data-tipo="series"><i class="fas fa-tv"></i><span>SÉRIES</span></a>
+  <a href="#" data-tipo="animes"><i class="fas fa-dragon"></i><span>ANIMES</span></a>
+  <a href="#" data-tipo="doramas"><i class="fas fa-heart"></i><span>DORAMAS</span></a>
+</nav>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const bannerContainer = document.getElementById("banner-container");
+  const conteudo = document.getElementById("conteudo-principal");
+  const botoes = document.querySelectorAll(".bottom-nav a");
+
+  // ✅ Banner dinâmico
+  catalogo.banner.forEach(item => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <a href="serie.html?slug=${item.slug}" class="banner-link">
+        <img src="${item.imagem}" alt="${item.titulo}">
+        <div class="banner-info">
+          <h2>${item.titulo}</h2>
+          <p><span class="banner-stars">★★★★☆</span> 99 votos</p>
+        </div>
+      </a>
+    `;
+    bannerContainer.appendChild(div);
+  });
+
+  function gerarCategoria(titulo, categoria, tipo) {
+    const section = document.createElement("section");
+    section.className = "section";
+    section.innerHTML = `
+      <div class="section-header">
+        <h3>${titulo}</h3>
+      </div>
+      <div class="series-container">
+        ${catalogo[categoria].map(item => `
+          <div class="card">
+            <a href="${tipo}.html?slug=${item.slug}" class="card-link">
+              <img src="${item.imagem}" alt="${item.titulo}">
+              <p>${item.titulo}</p>
+            </a>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    conteudo.appendChild(section);
+  }
+
+  function mostrarInicio() {
+    conteudo.innerHTML = "";
+    gerarCategoria("SÉRIES", "series", "serie");
+    gerarCategoria("FILMES", "filmes", "filme");
+    gerarCategoria("ANIMES", "animes", "anime");
+    gerarCategoria("DORAMAS", "doramas", "dorama");
+  }
+
+  function mostrarCategoria(tipo) {
+    conteudo.innerHTML = "";
+    const nome = tipo.toUpperCase();
+    gerarCategoria(nome, tipo, tipo.slice(0, -1));
+  }
+
+  botoes.forEach(botao => {
+    botao.addEventListener("click", e => {
+      e.preventDefault();
+      botoes.forEach(b => b.classList.remove("ativo"));
+      botao.classList.add("ativo");
+
+      const tipo = botao.getAttribute("data-tipo");
+      if (tipo === "inicio") mostrarInicio();
+      else mostrarCategoria(tipo);
+    });
+  });
+
+  mostrarInicio();
+
+  const searchIcon = document.getElementById("search-icon");
+  const searchForm = document.getElementById("search-form");
+  searchIcon.addEventListener("click", ()=>{
+    if(searchForm.style.display==="block") searchForm.style.display="none";
+    else { searchForm.style.display="block"; searchForm.querySelector("input").focus(); }
+  });
+});
+</script>
+
+</body>
+</html>

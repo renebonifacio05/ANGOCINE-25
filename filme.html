@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>ANGOCINE - Filme</title>
+  <style>
+    :root {
+      --bg-1:#001f3f;
+      --panel:#00264d;
+      --panel-2:#003366;
+      --accent:#1e90ff;
+      --accent-hover:#ff8c00;
+      --muted:#cfcfcf;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg-1);
+      color: #fff;
+      padding-bottom: 80px;
+    }
+
+    /* Topo */
+    .top-bar {
+      background: var(--panel-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 16px;
+      position: relative;
+    }
+    .top-bar .voltar {
+      position: absolute;
+      left: 16px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .top-bar h1 {
+      margin: 0;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    /* Banner */
+    .banner {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 18px 10px 4px 10px;
+    }
+    .banner .capa {
+      width: 260px;
+      max-width: 80%;
+      height: 380px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .banner .capa img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Info */
+    .info {
+      padding: 12px 16px;
+      text-align: center;
+    }
+    .info h1 {
+      font-size: clamp(20px, 3.2vw, 28px);
+      margin: 6px 0;
+    }
+    .info p {
+      color: var(--muted);
+      margin: 10px 0 20px;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    /* Botão Baixar */
+    .botao-centro {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .botao-centro a {
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 16px;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: background .2s ease, transform .1s ease;
+    }
+    .botao-centro a:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Rodapé */
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 60px;
+      background: var(--panel-2);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      z-index: 999;
+    }
+    .bottom-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .bottom-nav a i { font-size: 18px; }
+
+    @media (max-width:420px) {
+      .banner .capa { height: 320px; width: 200px; }
+      .info p { font-size: 13px; }
+    }
+  </style>
+  <script src="sessao.js"></script>
+</head>
+<body>
+
+  <header class="top-bar">
+    <a href="home.html" class="voltar" title="Voltar">←</a>
+    <h1>ANGOCINE</h1>
+  </header>
+
+  <div class="banner">
+    <div class="capa">
+      <img id="filme-imagem" src="" alt="Capa do filme">
+    </div>
+  </div>
+
+  <div class="info">
+    <h1 id="filme-titulo">Título do Filme</h1>
+    <p id="filme-descricao">Descrição do filme...</p>
+  </div>
+
+  <div class="botao-centro">
+    <a id="filme-botao" href="#" target="_blank">Baixar</a>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="home.html"><i class="fa">&#xf015;</i><span>Início</span></a>
+    <a href="#"><i class="fa">&#xf008;</i><span>Filmes</span></a>
+    <a href="#"><i class="fa">&#xf6d5;</i><span>Animes</span></a>
+    <a href="#"><i class="fa">&#xf26c;</i><span>Doramas</span></a>
+    <a href="resultado.html"><i class="fa">&#xf002;</i><span>Buscar</span></a>
+  </nav>
+
+  <script src="catalogo.js"></script>
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get("slug");
+      const filmes = catalogo.filmes || [];
+      const filme = filmes.find(f => f.slug === slug);
+
+      if (!filme) {
+        document.querySelector(".info").innerHTML =
+          "<p style='color:#fff;text-align:center;padding:20px;'>Filme não encontrado.</p>";
+        document.querySelector(".botao-centro").style.display = "none";
+        return;
+      }
+
+      document.getElementById("filme-imagem").src = filme.imagem;
+      document.getElementById("filme-titulo").textContent = filme.titulo;
+      document.getElementById("filme-descricao").textContent = filme.descricao;
+      document.getElementById("filme-botao").href = filme.link;
+    })();
+  </script>
+
+</body>
+</html>

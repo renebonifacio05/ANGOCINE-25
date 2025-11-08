@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultado da Pesquisa</title>
+<link rel="stylesheet" href="style.css">
+<script src="catalogo.js" defer></script>
+</head>
+<body>
+
+<!-- Topo -->
+<header class="top-bar">
+  <i class="fas fa-bars menu-btn"></i>
+  <h1>ANGOCINE</h1>
+  <i class="fas fa-search" id="search-icon"></i>
+  <form id="search-form" action="resultado.html" method="get" style="display:none;">
+    <input type="text" name="busca" id="search-input" placeholder="Pesquisar...">
+  </form>
+</header>
+
+<!-- Resultados -->
+<section class="section">
+  <h3>Resultados da Pesquisa</h3>
+  <div class="series-container" id="resultado-container"></div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const termo = params.get("busca")?.toLowerCase();
+  const container = document.getElementById("resultado-container");
+
+  if (!termo) {
+    container.innerHTML = "<p>Nenhum termo pesquisado.</p>";
+    return;
+  }
+
+  // Procurar em todas as categorias
+  let resultados = [];
+  for (let categoria in catalogo) {
+    if (Array.isArray(catalogo[categoria])) {
+      resultados = resultados.concat(
+        catalogo[categoria].filter(item => item.titulo.toLowerCase().includes(termo))
+          .map(item => ({ ...item, tipo: categoria })) // <- adiciona tipo
+      );
+    }
+  }
+
+  if (resultados.length === 0) {
+    container.innerHTML = "<p>Nenhum resultado encontrado.</p>";
+    return;
+  }
+
+  resultados.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="card-link" onclick="abrirDetalhes('${item.slug}', '${item.tipo}')">
+        <img src="${item.imagem}" alt="${item.titulo}">
+        <p>${item.titulo}</p>
+      </div>
+      <p>${item.descricao}</p>
+    `;
+    container.appendChild(card);
+  });
+});
+
+// Função que abre a página correta dependendo do tipo
+function abrirDetalhes(slug, tipo) {
+  let pagina = "";
+
+  if (tipo === "series") {
+    pagina = "serie.html"; // <-- usa o modelo novo de série
+  } else if (tipo === "filmes") {
+    pagina = "filme.html";
+  } else if (tipo === "animes") {
+    pagina = "anime.html";
+  } else if (tipo === "doramas") {
+    pagina = "dorama.html";
+  } else {
+    pagina = "filme.html"; // padrão de segurança
+  }
+
+  window.location.href = `${pagina}?slug=${slug}`;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>ANGOCINE - Anime</title>
+  <style>
+    :root{
+      --bg-1:#001f3f;
+      --panel:#00264d;
+      --panel-2:#003366;
+      --accent:#1e90ff;
+      --accent-hover:#ff8c00;
+      --muted:#cfcfcf;
+    }
+
+    *{box-sizing:border-box;}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg-1);
+      color: #fff;
+      padding-bottom: 80px;
+    }
+
+    /* topo centralizado */
+    .top-bar {
+      background: var(--panel-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 16px;
+      position: relative;
+    }
+    .top-bar .voltar {
+      position: absolute;
+      left: 16px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .top-bar h1 {
+      margin: 0;
+      font-size: 18px;
+      text-align: center;
+      flex: 1;
+    }
+
+    .banner {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 18px 10px 4px 10px;
+    }
+    .banner .capa {
+      width: 260px;
+      max-width: 80%;
+      height: 380px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+      background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.35));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .banner .capa img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .info {
+      padding: 12px 16px;
+    }
+    .info h1 {
+      font-size: clamp(20px, 3.2vw, 28px);
+      margin: 6px 0;
+    }
+    .info .votos {
+      color: gold;
+      margin: 6px 0 8px 0;
+      font-size: 14px;
+    }
+    .info p {
+      color: var(--muted);
+      margin: 0 0 8px 0;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    #temporadas-container { padding: 6px 12px 90px 12px; }
+    .temporada {
+      background: var(--panel);
+      margin: 12px 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    }
+    .temporada-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      background: var(--panel-2);
+      cursor: pointer;
+      gap: 10px;
+    }
+    .temporada-header h2 { margin: 0; font-size: 15px; color: #fff; }
+    .temporada-header .seta {
+      font-size: 16px;
+      color: var(--accent);
+      transition: transform .28s ease;
+    }
+    .temporada-header .seta.girar { transform: rotate(180deg); }
+
+    .episodios {
+      display: none;
+      padding: 10px 12px;
+      animation: fadeIn .28s ease;
+    }
+    .episodios.ativo { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .episodio {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: #003366;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      transition: background .18s ease, transform .12s ease;
+    }
+    .episodio:hover { background: #004080; transform: translateY(-1px); }
+    .episodio p {
+      margin: 0;
+      font-size: 14px;
+      color: #fff;
+      flex: 1;
+    }
+
+    .botao {
+      margin-left: 12px;
+      padding: 6px 10px;
+      font-size: 12px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      transition: background .18s ease, transform .08s ease;
+    }
+    .botao:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 60px;
+      background: var(--panel-2);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid rgba(255,255,255,0.03);
+      z-index: 999;
+    }
+    .bottom-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .bottom-nav a i { font-size: 18px; }
+
+    @media (max-width:420px){
+      .banner .capa { height: 320px; width: 200px; }
+      .episodio p { font-size: 13px; }
+      .botao { padding: 6px 8px; font-size: 12px; }
+    }
+  </style>
+  <script src="sessao.js"></script>
+</head>
+<body>
+
+  <header class="top-bar">
+    <a href="home.html" class="voltar" title="Voltar">←</a>
+    <h1>ANGOCINE</h1>
+  </header>
+
+  <div class="banner">
+    <div class="capa">
+      <img id="serie-imagem" src="" alt="Capa do anime">
+    </div>
+  </div>
+
+  <div class="info">
+    <h1 id="serie-titulo">Título</h1>
+    <div class="votos" id="serie-votos" style="display:none;">⭐ 0 votos</div>
+    <p id="serie-descricao">Descrição</p>
+  </div>
+
+  <div id="temporadas-container"></div>
+
+  <nav class="bottom-nav">
+    <a href="home.html"><i class="fa">&#xf015;</i><span>Início</span></a>
+    <a href="#"><i class="fa">&#xf008;</i><span>Filmes</span></a>
+    <a href="#"><i class="fa">&#xf6d5;</i><span>Animes</span></a>
+    <a href="#"><i class="fa">&#xf26c;</i><span>Doramas</span></a>
+    <a href="resultado.html"><i class="fa">&#xf002;</i><span>Buscar</span></a>
+  </nav>
+
+  <script src="catalogo.js"></script>
+  <script>
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get("slug");
+      const todas = [
+        ...(catalogo.series || []),
+        ...(catalogo.filmes || []),
+        ...(catalogo.animes || []),
+        ...(catalogo.doramas || [])
+      ];
+      const item = todas.find(i => i.slug === slug);
+      if (!item) {
+        document.getElementById('temporadas-container').innerHTML =
+          "<p style='color:#fff;text-align:center;padding:20px;'>Conteúdo não encontrado.</p>";
+        return;
+      }
+
+      document.getElementById('serie-imagem').src = item.imagem;
+      document.getElementById('serie-titulo').textContent = item.titulo;
+      document.getElementById('serie-descricao').textContent = item.descricao;
+
+      const container = document.getElementById('temporadas-container');
+      container.innerHTML = "";
+
+      if (!item.temporadas) {
+        container.innerHTML = "<p style='padding:12px;'>Nenhuma temporada disponível.</p>";
+        return;
+      }
+
+      item.temporadas.forEach((temp, idx) => {
+        const bloco = document.createElement('div');
+        bloco.className = 'temporada';
+        const header = document.createElement('div');
+        header.className = 'temporada-header';
+        header.innerHTML = `<h2>${temp.nome}</h2><span class="seta">▼</span>`;
+        const lista = document.createElement('div');
+        lista.className = 'episodios';
+
+        temp.episodios.forEach(ep => {
+          const epDiv = document.createElement('div');
+          epDiv.className = 'episodio';
+          epDiv.innerHTML = `<p>${ep.titulo}</p><a href="${ep.link}" target="_blank" class="botao">Baixar</a>`;
+          lista.appendChild(epDiv);
+        });
+
+        if (item.temporadas.length === 1) {
+          lista.classList.add('ativo');
+          header.querySelector('.seta').classList.add('girar');
+        }
+
+        header.addEventListener('click', () => {
+          document.querySelectorAll('.episodios').forEach(e => {
+            if (e !== lista) e.classList.remove('ativo');
+          });
+          document.querySelectorAll('.seta').forEach(s => {
+            if (s !== header.querySelector('.seta')) s.classList.remove('girar');
+          });
+          lista.classList.toggle('ativo');
+          header.querySelector('.seta').classList.toggle('girar');
+        });
+
+        bloco.appendChild(header);
+        bloco.appendChild(lista);
+        container.appendChild(bloco);
+      });
+    })();
+  </script>
+</body>
+</html>
