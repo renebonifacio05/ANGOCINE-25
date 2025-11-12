@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angocine — Método de Pagamento</title>
+<style>
+:root{
+  --navy:#001f3f;     /* azul escuro igual ao index */
+  --navy-2:#003366;   /* azul secundário igual ao index */
+  --accent:#00c8ff;
+  --muted:#9fb6c6;
+  --glass: rgba(255,255,255,0.03);
+  --card:#062f44;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;}
+body{
+  background: linear-gradient(160deg,var(--navy) 0%, var(--navy-2) 100%);
+  color:#eaf6fb;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding:20px;
+}
+.app{
+  display:flex;
+  gap:20px;
+  max-width:1200px;
+  width:100%;
+  min-height:600px;
+}
+.left-panel{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+.right-panel{
+  width:300px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.header{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  text-align:center;
+}
+.header h1{
+  font-size:28px;
+  color:var(--accent);
+}
+.header p{
+  font-size:14px;
+  color:var(--muted);
+}
+.carousel-container{
+  perspective:1200px;
+  height:220px;
+  margin-top:12px;
+  overflow:hidden;
+  position:relative;
+}
+.carousel{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100%;
+  transform-style:preserve-3d;
+  transition:transform 1s;
+}
+.carousel-item{
+  position:absolute;
+  width:160px;
+  height:200px;
+  background:var(--card);
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:6px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.6);
+  color:#fff;
+  text-align:center;
+  transition:transform 1s, opacity 1s;
+}
+.carousel-item img{
+  width:100%;
+  height:120px;
+  border-radius:10px;
+  object-fit:cover;
+  margin-bottom:6px;
+}
+.carousel-item h4{font-size:14px;margin-bottom:2px;}
+.carousel-item p{font-size:12px;color:var(--muted);}
+.methods-container{
+  overflow-y:auto;
+  max-height:250px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:12px;
+}
+.method-card{
+  background:var(--glass);
+  padding:14px;
+  border-radius:12px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  cursor:pointer;
+  border:1px solid transparent;
+  transition:all .2s;
+  width:100%;
+  min-height:70px;
+}
+.method-card:hover{transform:translateX(4px);border-color:var(--accent);}
+.method-card .icon{
+  width:48px;
+  height:48px;
+  border-radius:10px;
+  background:var(--card);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold;
+  font-size:20px;
+}
+.method-card h3{margin:0;font-size:15px;}
+.method-card p{margin:4px 0 0;font-size:12px;color:var(--muted);}
+.payment-card{
+  background:#00c8ff;
+  padding:14px;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:4px;
+  width:100%;
+  min-height:70px;
+  color:var(--navy);
+  box-shadow:0 12px 30px rgba(0,0,0,0.3);
+}
+.overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(2,22,34,0.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  backdrop-filter:blur(5px);
+  opacity:0;pointer-events:none;
+  transition:opacity .3s;
+  z-index:1000;
+}
+.overlay.open{opacity:1;pointer-events:auto;}
+.sheet{
+  background:var(--navy-2);
+  padding:22px;
+  border-radius:12px;
+  width:90%;
+  max-width:600px;
+  max-height:90%;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.sheet .top{
+  display:flex;justify-content:space-between;align-items:center;
+}
+.sheet .top h2{margin:0;}
+.sheet .back{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.04);
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  color:#eaf6fb;
+}
+.sheet .content{display:flex;flex-direction:column;gap:10px;}
+.sheet .info-row{display:flex;align-items:center;justify-content:space-between;}
+.sheet .code{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;font-family:monospace;color:var(--muted);flex:1;margin-right:8px;}
+.sheet .copy-btn, .sheet .primary{cursor:pointer;border:none;border-radius:8px;padding:10px;}
+.sheet .copy-btn{background:rgba(255,255,255,0.03);color:#eaf6fb;}
+.sheet .primary{background:var(--accent);color:var(--navy);font-weight:700;}
+.toast{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#062f44;
+  padding:10px 14px;
+  border-radius:10px;
+  color:var(--accent);
+  font-weight:700;
+  display:none;
+}
+@media(max-width:800px){
+  .app{flex-direction:column;}
+  .right-panel{width:100%;}
+  .carousel-item{width:120px;height:160px;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="left-panel">
+    <div class="header">
+      <h1>Angocine</h1>
+      <p>Método de Pagamento</p>
+    </div>
+    <div class="carousel-container">
+      <div class="carousel" id="carousel"></div>
+    </div>
+    <div>
+      <strong>Métodos de pagamento</strong>
+      <div class="methods-container" id="methods"></div>
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="payment-card">
+      <div><strong>Pagamento:</strong> 515,00 AOA</div>
+      <div><strong>Suporte:</strong> +244 942 292 309</div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="sheet">
+    <div class="top">
+      <h2 id="sheetTitle">Método</h2>
+      <button class="back" id="btnBack">← Voltar</button>
+    </div>
+    <div class="content">
+      <div class="info-row">
+        <span>Valor:</span>
+        <input type="text" id="sheetAmount" value="515,00" style="border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:#eaf6fb;padding:8px;">
+      </div>
+      <div class="info-row">
+        <span>Referência:</span>
+        <div style="display:flex;align-items:center;width:100%;">
+          <div class="code" id="sheetCode">—</div>
+          <button class="copy-btn" id="sheetCopy">Copiar</button>
+        </div>
+      </div>
+      <button class="primary" id="sheetConfirm">Confirmar (WhatsApp)</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copiado ✅</div>
+
+<script>
+// Carrossel com imagens de filmes
+const carouselData=[
+  {title:'A Última Noite',sub:'Suspense / Drama',img:'https://m.media-amazon.com/images/I/71P9G1WrYQL._AC_SL1500_.jpg'},
+  {title:'Viagem Estelar',sub:'Sci-fi • Em destaque',img:'https://m.media-amazon.com/images/I/81z0uYuwg6L._AC_SL1500_.jpg'},
+  {title:'Risos & Café',sub:'Comédia — Nova temporada',img:'https://m.media-amazon.com/images/I/81aK4dOXn0L._AC_SL1500_.jpg'},
+  {title:'Horizonte Vermelho',sub:'Ação • Imperdível',img:'https://m.media-amazon.com/images/I/81Uchc0o1sL._AC_SL1500_.jpg'},
+  {title:'Melodia do Mar',sub:'Romance • Em cartaz',img:'https://m.media-amazon.com/images/I/81gJmSL0wAL._AC_SL1500_.jpg'}
+];
+
+const methodsData=[
+  {name:'Multicaixa Express',desc:'Pagamento via app',icon:'M',key:'multicaixa'},
+  {name:'IBAN',desc:'Transferência',icon:'I',key:'iban'},
+  {name:'Unicoman',desc:'Plataforma/Ref',icon:'U',key:'unicoman'}
+];
+
+const DATA={
+  multicaixa:{title:'Multicaixa Express',subtitle:'Abra o app Multicaixa',code:'RHN-4521-22'},
+  iban:{title:'IBAN',subtitle:'Copie IBAN e referência',code:'AO06 0000 0000 0012 3456 7890'},
+  unicoman:{title:'Unicoman',subtitle:'Use a plataforma Unicoman',code:'UNIC-7782-XL'}
+};
+
+const WA_BASE='https://wa.me/244942292309';
+
+// Carrossel
+const carousel=document.getElementById('carousel');
+carouselData.forEach((f,i)=>{
+  const div=document.createElement('div');
+  div.className='carousel-item';
+  div.innerHTML=`
+    <img src="${f.img}" alt="${f.title}">
+    <h4>${f.title}</h4>
+    <p>${f.sub}</p>
+  `;
+  carousel.appendChild(div);
+});
+
+// Métodos de pagamento
+const methodsContainer=document.getElementById('methods');
+methodsData.forEach(m=>{
+  const div=document.createElement('div');
+  div.className='method-card';
+  div.dataset.method=m.key;
+  div.innerHTML=`<div class="icon">${m.icon}</div><div><h3>${m.name}</h3><p>${m.desc}</p></div>`;
+  methodsContainer.appendChild(div);
+});
+
+// Overlay logic
+const overlay=document.getElementById('overlay');
+const sheetTitle=document.getElementById('sheetTitle');
+const sheetCode=document.getElementById('sheetCode');
+const sheetAmount=document.getElementById('sheetAmount');
+const sheetCopy=document.getElementById('sheetCopy');
+const sheetConfirm=document.getElementById('sheetConfirm');
+const btnBack=document.getElementById('btnBack');
+const toast=document.getElementById('toast');
+
+function openSheet(key){
+  const data=DATA[key];
+  if(!data) return;
+  sheetTitle.textContent=data.title;
+  sheetCode.textContent=data.code;
+  overlay.classList.add('open');
+  overlay.dataset.method=key;
+}
+
+function closeSheet(){overlay.classList.remove('open');overlay.dataset.method='';}
+
+document.querySelectorAll('.method-card').forEach(c=>{
+  c.addEventListener('click',()=>openSheet(c.dataset.method));
+});
+
+btnBack.addEventListener('click',closeSheet);
+
+sheetCopy.addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText(sheetCode.textContent.trim());toast.style.display='block';setTimeout(()=>toast.style.display='none',1600);}catch(e){alert('Copiado: '+sheetCode.textContent);}
+});
+
+sheetConfirm.addEventListener('click',()=>{
+  const key=overlay.dataset.method;
+  const data=DATA[key];
+  const msg=encodeURIComponent(`Olá, confirmei o pagamento. Método: ${data.title} | Valor: ${sheetAmount.value} | Ref: ${data.code}`);
+  window.open(WA_BASE+'?text='+msg,'_blank');
+});
+
+// Coverflow carousel
+let idx=0;
+function updateCarousel(){
+  const items=document.querySelectorAll('.carousel-item');
+  const n=items.length;
+  items.forEach((item,i)=>{
+    const offset=(i-idx+n)%n;
+    let scale=0.6, zIndex=0, xOffset=0, rotateY=0, opacity=0.5;
+    if(offset===0){scale=1;zIndex=3;xOffset=0;rotateY=0;opacity=1;}
+    if(offset===1){scale=0.8;zIndex=2;xOffset=120;rotateY=-25;opacity=0.8;}
+    if(offset===n-1){scale=0.8;zIndex=2;xOffset=-120;rotateY=25;opacity=0.8;}
+    if(offset===2){scale=0.7;zIndex=1;xOffset=240;rotateY:-30;opacity=0.6;}
+    if(offset===n-2){scale=0.7;zIndex=1;xOffset=-240;rotateY:30;opacity=0.6;}
+    item.style.transform=`translateX(${xOffset}px) scale(${scale}) rotateY(${rotateY}deg)`;
+    item.style.zIndex=zIndex;
+    item.style.opacity=opacity;
+  });
+}
+
+updateCarousel();
+setInterval(()=>{idx=(idx+1)%carouselData.length;updateCarousel();},2500);
+</script>
+</body>
+</html>

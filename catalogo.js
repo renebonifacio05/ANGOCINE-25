@@ -1,7 +1,62 @@
 // 📂 catalogo.js
 
 const catalogo = {
-  banner: [
+
+  // 📺 Séries
+  series: [
+    {
+      slug: "game-of-thrones",
+      titulo: "Game of Thrones",
+      imagem: "2950d35edaf94a68825431d1335ea06d.jpg",
+      descricao: "Nove famílias nobres lutam pelo controle da terra mítica de Westeros, enquanto um antigo inimigo retorna após estar adormecido por milhares de anos. Intrigas, traições e batalhas épicas definem esta série que conquistou o mundo.",
+      temporadas: [
+        {
+          nome: "Temporada 1",
+          episodios: [
+            { titulo: "Ep. 1 — O Inverno Está Chegando (Winter Is Coming)", link: "https://mega.nz/file/PkISlZAA#EquYFxvzklUR_PHJ8zfqJSmgBRFiaTinGBoI_b_cAGg" },
+            { titulo: "Ep. 2 — A Estrada Real (The Kingsroad)", link: "https://mega.nz/file/jgA03aqa#AHNsGGni90gbh0ow25UqZXFLsmpzjfgScXsSGo1O6Q8" },
+            { titulo: "Ep. 3 — Lord Snow", link: "https://mega.nz/file/jgRmxRSR#JadrPSnmubCKT_ZtvYmSHGTWXDk6YWYk379DHY4X2UA" },
+            { titulo: "Ep. 4 — Aleijado, Bastardo e Coisas Que Quebram", link: "https://mega.nz/file/ugBWkQAS#WztehByQsXqnDmWUV7LkG2wRlikDPjg1oWzTBlTX8fE" },
+            { titulo: "Ep. 5 — O Lobo e o Leão", link: "https://mega.nz/file/XhR33TRK#aX-uWGDigaz60d1T7tJUl3pgNo0XViZy46pOR-QDp0s" },
+            { titulo: "Ep. 6 — Uma Coroa de Ouro", link: "https://mega.nz/file/XpRXHBRY#EoGHKXRfDz_prUU71LzKvX-ma0g8Fy2v4yUHYc73zA0" },
+            { titulo: "Ep. 7 — Ganhando Ou Morrendo", link: "https://mega.nz/file/nggDlZIJ#dOhY002wn2u8dmwvG4wpdXoUu3YWSmsTrW6axDEy9xw" },
+            { titulo: "Ep. 8 — O Ponto Sem Retorno", link: "https://mega.nz/file/fgJRRZzQ#WqqgMWOHQvVYni9PyvOWyieY3ahoVQCMbZKnE6SHOdU" },
+            { titulo: "Ep. 9 — Baelor", link: "https://mega.nz/file/ClQT3bKJ#F2BZowSeBbXYyM0kPr93Q0rWrd4Tpx7p3JcacXMNQmM" },
+            { titulo: "Ep. 10 — Fogo e Sangue", link: "https://mega.nz/file/zwJ2jDJK#DOUq2RbCycb82VNoIMDZqQgoGQxfGAxtxkXgbEodvTE" }
+          ]
+        }
+      ]
+    },
+    {
+      slug: "prison-break",
+      titulo: "Prison Break",
+      imagem: "https://upload.wikimedia.org/wikipedia/en/4/46/Prison_Break_season_1_dvd.jpg",
+      descricao: "Michael Scofield planeja escapar da prisão para salvar o irmão injustamente condenado.",
+      temporadas: [
+        {
+          nome: "Temporada 1",
+          episodios: [
+            { titulo: "Ep. 1 — Piloto", link: "https://mega.nz/prison1" },
+            { titulo: "Ep. 2 — Allen", link: "https://mega.nz/prison2" }
+          ]
+        }
+      ]
+    },
+    {
+      slug: "the-last-of-us",
+      titulo: "The Last of Us",
+      imagem: "cvcgffhvvb.png",
+      descricao: "Em um mundo devastado por uma infecção, Joel e Ellie cruzam os Estados Unidos em busca de sobrevivência.",
+      temporadas: [
+        {
+          nome: "Temporada 1",
+          episodios: [
+            { titulo: "Ep. 1 — Quando Você Estiver Perdido na Escuridão", link: "https://mega.nz/tlou1" },
+            { titulo: "Ep. 2 — Infectado", link: "https://mega.nz/tlou2" }
+          ]
+        }
+      ]
+    },
     {
       slug: "wandinha",
       titulo: "Wandinha",
@@ -25,71 +80,14 @@ const catalogo = {
     }
   ],
 
-  // 📺 Séries
-  series: [
-    {
-      slug: "game-of-thrones",
-      titulo: "Game of Thrones",
-      imagem: "https://upload.wikimedia.org/wikipedia/en/d/d8/Game_of_Thrones_title_card.jpg",
-      descricao: "Reinos, intrigas e dragões em uma disputa épica pelo Trono de Ferro.",
-      temporadas: [
-        {
-          nome: "Temporada 1",
-          episodios: [
-            { titulo: "Ep. 1 — O Inverno Está Chegando", link: "https://mega.nz/example1-1" },
-            { titulo: "Ep. 2 — A Estrada Real", link: "https://mega.nz/example1-2" },
-            { titulo: "Ep. 3 — Lorde Snow", link: "https://mega.nz/example1-3" }
-          ]
-        },
-        {
-          nome: "Temporada 2",
-          episodios: [
-            { titulo: "Ep. 1 — O Norte se Lembra", link: "https://mega.nz/example2-1" },
-            { titulo: "Ep. 2 — As Terras da Noite", link: "https://mega.nz/example2-2" }
-          ]
-        }
-      ]
-    },
-    {
-      slug: "prison-break",
-      titulo: "Prison Break",
-      imagem: "https://upload.wikimedia.org/wikipedia/en/4/46/Prison_Break_season_1_dvd.jpg#",
-      descricao: "Michael Scofield planeja escapar da prisão para salvar o irmão injustamente condenado.",
-      temporadas: [
-        {
-          nome: "Temporada 1",
-          episodios: [
-            { titulo: "Ep. 1 — Piloto", link: "https://mega.nz/prison1" },
-            { titulo: "Ep. 2 — Allen", link: "https://mega.nz/prison2" }
-          ]
-        }
-      ]
-    },
-    {
-      slug: "the-last-of-us",
-      titulo: "The Last of Us",
-      imagem: "the Lost us.jpg",
-      descricao: "Em um mundo devastado por uma infecção, Joel e Ellie cruzam os Estados Unidos em busca de sobrevivência.",
-      temporadas: [
-        {
-          nome: "Temporada 1",
-          episodios: [
-            { titulo: "Ep. 1 — Quando Você Estiver Perdido na Escuridão", link: "https://mega.nz/tlou1" },
-            { titulo: "Ep. 2 — Infectado", link: "https://mega.nz/tlou2" }
-          ]
-        }
-      ]
-    }
-  ],
-
   // 🎬 Filmes
   filmes: [
     {
-      slug: "bekeeper",
-      titulo: "The Beekeeper",
-      imagem: "Beekeper.jpeg",
-      descricao: "Um ex-agente das sombras busca vingança após uma tragédia pessoal.",
-      link: "https://mega.nz/example11"
+      slug: "elio",
+      titulo: "Elio 2025",
+      imagem: "https://upload.wikimedia.org/wikipedia/en/4/4e/Elio_film_poster.jpg",
+      descricao: "Elio é um filme de animação americano produzido pela Pixar Animation Studios e distribuído pela Walt Disney Studios Motion Pictures.",
+      link: "https://mega.nz/file/mow3hZxT#A7D9b9O97IJml8rdD0EJxiiXEcVSU1LhxKaS8XbcLoY"
     },
     {
       slug: "john-wick-4",
@@ -99,19 +97,125 @@ const catalogo = {
       link: "https://mega.nz/johnwick4"
     },
     {
+      slug: "Nossa-culpa",
+      titulo: "Nossa culpa 2025",
+      imagem: "https://upload.wikimedia.org/wikipedia/pt/4/48/Culpa_nuestra.webp",
+      descricao: "O casamento de Jenna e Lion proporciona o tão esperado reencontro entre Noah e Nick algum tempo após o término.",
+      link: "https://mega.nz/file/y8hXCATa#dPlMg84P8PrEO1CrRq1JcWqLdxAgKbdiSZXeYev1Now"
+    },
+      {
+      slug: "missão-resgate",
+      titulo: "Missão resgate 2025",
+      imagem: "https://upload.wikimedia.org/wikipedia/pt/8/8f/TheIceRoad.jpeg",
+      descricao: "Mike McCann, um caminhoneiro perito em viajar por estradas de gelo, vai ao Nepal para cumprir o último desejo do irmão: espalhar suas cinzas no Monte Everest.",
+      link: "https://mega.nz/file/r0oRhTZZ#FC6mw1dawr0anhzX27y_-cZkrg73lrTYCub8ToO62L4"
+    },
+     {
+      slug: "Lilo-e-Stitch",
+      titulo: "Lilo e Stitch 2025",
+      imagem: "https://upload.wikimedia.org/wikipedia/en/5/56/Lilo_%26_Stitch_2025_Theatrical_Poster.jpg",
+      descricao: "Lilo & Stitch é um filme de comédia de ficção científica americano dirigido por Dean Fleischer Camp e escrito por Chris Kekaniokalani Bright e Mike Van Waes. Produzido pela Walt Disney Pictures e Rideback, o filme é um remake.",
+      link: "https://mega.nz/file/OlgVFbzL#D83UGm6unuXQTuviSCQWT9BjeDl9tB4tf1sIDxYwmCc"
+    },
+     {
       slug: "avatar-2",
       titulo: "Avatar: O Caminho da Água",
       imagem: "3197518.jpg",
       descricao: "Jake Sully e Neytiri formam uma família e enfrentam uma nova ameaça em Pandora.",
       link: "https://mega.nz/avatar2"
     },
+      
+       {
+      slug: "os-caras-malvados-2",
+      titulo: "Os caras malvados 2 2025",
+      imagem: "https://upload.wikimedia.org/wikipedia/pt/b/b9/The_Bad_Guys_2_%282025%29_teaser_poster.jpg",
+      descricao: "The Bad Guys 2 é um filme de animação estadunidense do gênero comédia lançado em 2025, produzido pela DreamWorks Animation e distribuído pela Universal Pictures",
+      link: "https://mega.nz/file/3wA1DaIS#TrAxuhVavm2k0xFY2idF7TR5eDkc343n3Fpqf_uMnAU"
+    },
+       {
+      slug: "senhor-do-vento",
+      titulo: "Senhor do vento 2025",
+      imagem: "images (5).jpeg",
+      descricao: "Fedor Konyukhov é um renomado explorador russo que se prepara para realizar sua mais ambiciosa empreitada: dar a volta ao mundo em um balão de ar quente em apenas 11 dias.",
+      link: "https://mega.nz/file/z0xR3LQZ#n3V_e0OsHgbzvZuKsscs93pNN2CR624yu34NVEgjBkk"
+    },
+     {
+      slug: "presente-maldito",
+      titulo: "Presente maldito 2025",
+      imagem: "20251014-presente-maldito-papo-de-cinema-cartaz.webp",
+      descricao: "Polly recebe uma caixa misteriosa de um visitante inesperado no meio da noite, juntamente com uma instrução simples.",
+      link: "https://mega.nz/file/v9hm0K6L#ECvd8pSw9HW9CQBfrk8wnREAO7mq47y-J8Q9e1QTA8g"
+    },
     {
-  slug: "homem-aranha-longe-de-casa",
-  titulo: "Homem-Aranha: Longe de Casa",
-  imagem: "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg",
-  descricao: "Peter Parker enfrenta desafios multiversais enquanto busca proteger quem ama.",
-  link: "https://mega.nz/spiderman"
-}
+      slug: "a-culpa-e-das-estrelas",
+      titulo: "A Culpa é das Estrelas",
+      imagem: "5f90f4cdc04bc547f0427d132a042d6d.jpg",
+      descricao: "Hazel Grace Lancaster e Augustus Waters são dois adolescentes que se conhecem em um grupo de apoio para pacientes com câncer.",
+      link: "https://drive.google.com/file/d/1AqpWBLC6N7KNzWtVfi3INE-nM_cjlaa7/view"
+    },
+    {
+      slug: "doutor-estranho",
+      titulo: "Doutor Estranho",
+      imagem: "71c75661732c151507226626f4e59620.jpg",
+      descricao: "Após sua carreira ser destruída, um brilhante cirurgião ganha uma nova chance quando um feiticeiro o treina para se tornar o Mago Supremo.",
+      link: "https://drive.google.com/file/d/1-aR8Srm6dZbsQw1wb1GNkB8sdBG--P7u/view"
+    },
+    {
+      slug: "the-beekeeper",
+      titulo: "The Beekeeper",
+      imagem: "Beekeper.jpeg",
+      descricao: "Um ex-agente das sombras busca vingança após uma tragédia pessoal.",
+      link: "https://mega.nz/example11"
+    },
+       {
+      slug: "A-paris-errada",
+      titulo: "A paris errada",
+      imagem: "0806d443ca8c3064cb7f5c00373bf3a8.jpg",
+      descricao: "Dawn entra em um reality achando que o programa será filmado em Paris, na França, mas descobre que o programa se passará em Paris",
+      link: "https://mega.nz/file/DtZz0aSK#MlpX241lr1RZcB5p6xf9Bk_SkBjyDZXxMOhlhRM8pDk"
+    },
+    {
+      slug: "Anjo-negro",
+      titulo: "Anjo negro 2023",
+      imagem: "images (4).jpeg",
+      descricao: "No Rio, conhece Luan, um homem atraente que a faz questionar tudo. Sua vida simples se complica, tornando-a um Anjo Negro.",
+      link: "https://mega.nz/file/D5Z0CKjL#loGEQHjHpThrPMeVebz9ZIGmMudr-qWYhWkykkS1I_s"
+    },
+     {
+      slug: "manutenção-necessaria",
+      titulo: "Manutenção necessária 2025",
+      imagem: "MV5BNGZlN2Y5ZGEtMmU0MS00ZWI0LThlMjQtMjIyZTIxMWRlYjNlXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+      descricao: "Charlie, dona independente de uma oficina só para mulheres, precisa repensar seu futuro quando uma rede rival abre do outro lado da rua. Em busca de apoio, ela desabafa com um.",
+      link: "https://mega.nz/file/2pQ1mZTb#xfQwjeS_YP7K35oBLvr2IcgLVZGbSkDWN3jtH-2bAbo"
+    },
+    {
+      slug: "maze-runner",
+      titulo: "Maze Runner",
+      imagem: "a870a290848391d483b756ced82526ed.jpg",
+      descricao: "Um grupo de jovens presos em um labirinto tenta escapar enquanto enfrentam desafios mortais.",
+      link: "https://drive.google.com/file/d/1kJGIeqtrXV5OyqPhSaqMEFH3KZWKTyM0/view"
+    },
+    {
+      slug: "frozen-2",
+      titulo: "Frozen 2",
+      imagem: "fro.jpg",
+      descricao: "Elsa e Anna partem em uma jornada para descobrir a origem dos poderes de Elsa e salvar seu reino.",
+      link: "https://drive.google.com/file/d/10h_kWBZUe4uYfYaTE90n8rK7983zKZrZ/view?usp=drivesdk"
+    },
+    {
+      slug: "a-mentira-easy-a",
+      titulo: "A Mentira / Easy A",
+      imagem: "e4883fd4c30a5acb657cde32364dae74.jpg",
+      descricao: "Estimulada pela popular melhor amiga a revelar detalhes de seu fim de semana entediante.",
+      link: "https://drive.google.com/file/d/1fCLpDLk_U1_OFzGcYxR_UZMtAUoS4CZJ/view"
+    },
+    {
+      slug: "vantagem-de-ser-invisivel",
+      titulo: "A Vantagem de Ser Invisível",
+      imagem: "as.jpg",
+      descricao: "O tímido calouro Charlie faz amizade com dois veteranos extrovertidos, que o ensinam sobre o primeiro amor e a amizade.",
+      link: "https://drive.google.com/file/d/1wykbsROyG_Vcg2_iDxKjk7DgNhEbgvTj/view"
+    }
   ],
 
   // 🍥 Animes
@@ -126,15 +230,7 @@ const catalogo = {
           nome: "Temporada 1",
           episodios: [
             { titulo: "Ep. 1 — Naruto Uzumaki!", link: "https://mega.nz/naruto1" },
-            { titulo: "Ep. 2 — Meu Nome é Konohamaru!", link: "https://mega.nz/naruto2" },
-            { titulo: "Ep. 3 — Sasuke e Sakura: Amigos ou Inimigos?", link: "https://mega.nz/naruto3" }
-          ]
-        },
-        {
-          nome: "Temporada 2",
-          episodios: [
-            { titulo: "Ep. 1 — O Exame Chunin Começa", link: "https://mega.nz/naruto21" },
-            { titulo: "Ep. 2 — A Floresta da Morte", link: "https://mega.nz/naruto22" }
+            { titulo: "Ep. 2 — Meu Nome é Konohamaru!", link: "https://mega.nz/naruto2" }
           ]
         }
       ]
@@ -153,6 +249,23 @@ const catalogo = {
           ]
         }
       ]
+    },
+    {
+      slug: "solo-leveling",
+      titulo: "Solo Leveling",
+      imagem: "https://share.google/images/ssyr2ZtwKkZM1vT5S",
+      descricao: "Em um mundo onde caçadores lutam contra monstros, Sung Jin-Woo se torna o mais poderoso.",
+      temporadas: [
+        {
+          nome: "Temporada 1",
+          episodios: [
+            { titulo: "Ep. 1", link: "https://drive.google.com/file/d/1ddxpVzKnGhMYP7chPvbvJpg1Yv07DlNB/view" },
+            { titulo: "Ep. 2", link: "https://drive.google.com/file/d/1YPGOXCpFo-iCHMC_5gdhPF_sMDmIB82A/view" },
+            { titulo: "Ep. 3", link: "https://drive.google.com/file/d/1bpQ7HpB2LEVOYhqQcV7MIvDoK5foxdyQ/view" },
+            { titulo: "Ep. 4", link: "https://drive.google.com/file/d/1Qbn_9ANCgax_9FVgrELUlTg1WnuNL7la/view" }
+          ]
+        }
+      ]
     }
   ],
 
@@ -168,23 +281,7 @@ const catalogo = {
           nome: "Temporada Única",
           episodios: [
             { titulo: "Ep. 1 — O Encontro", link: "https://mega.nz/demon1" },
-            { titulo: "Ep. 2 — Contrato de Sangue", link: "https://mega.nz/demon2" },
-            { titulo: "Ep. 3 — O Preço da Emoção", link: "https://mega.nz/demon3" }
-          ]
-        }
-      ]
-    },
-    {
-      slug: "business-proposal",
-      titulo: "Business Proposal",
-      imagem: "p21403151_b_v13_ad.jpg",
-      descricao: "Uma funcionária se envolve em um encontro às cegas com o próprio chefe.",
-      temporadas: [
-        {
-          nome: "Temporada Única",
-          episodios: [
-            { titulo: "Ep. 1 — O Encontro Surpresa", link: "https://mega.nz/bp1" },
-            { titulo: "Ep. 2 — O Contrato do Amor", link: "https://mega.nz/bp2" }
+            { titulo: "Ep. 2 — Contrato de Sangue", link: "https://mega.nz/demon2" }
           ]
         }
       ]
